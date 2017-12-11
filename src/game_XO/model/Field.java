@@ -1,6 +1,6 @@
 package game_XO.model;
 
-public class Board {
+public class Field {
     private static final String DEFAULT_STATIC_FIND = " ";
 
     private static final int DEFAULT_FIELD_SIZE = 3;
@@ -9,11 +9,11 @@ public class Board {
 
     private final Figure [][] figure;
 
-    public Board(){
+    public Field(){
         this(DEFAULT_FIELD_SIZE);
     }
 
-    public Board(int size){
+    public Field(int size){
         fieldSize = size;
         figure = new Figure [fieldSize][fieldSize];
     }
@@ -27,6 +27,10 @@ public class Board {
 
     }
 
+    public int getFieldSize(){
+        return fieldSize;
+    }
+
     public int checkQantityFigureInBoard(Figure figure){     //возвращает количество переданных в метод символов в массиве figure
         int count = 0;
         for (Figure x[] : this.figure){
@@ -38,12 +42,12 @@ public class Board {
         return count;
     }
 
-    public Figure[][] getFigure() {
-        return figure;
+    public Figure getFigure(final Point point) {
+        return this.figure[point.getX()][point.getY()];
     }
 
-    public void setFigure (int  x, int y, Figure figure){
-        this.figure[x][y] = figure;
+    public void setFigure (Point point, Figure figure){
+        this.figure[point.getX()][point.getY()] = figure;
     }
 
     private void showLine(int lineNumber){
@@ -56,7 +60,7 @@ public class Board {
         if (this.figure[x][y] == null){
             System.out.print("[" + DEFAULT_STATIC_FIND + "]");
         } else {
-            System.out.print("[" + this.figure[x][y].getFigure() + "]");
+            System.out.print("[" + this.getFigure(new Point(x,y)) + "]");
         }
     }
 

@@ -14,4 +14,9 @@ public enum Figure {
         return figure;
     }
 
+    @Override
+    public String toString() {
+        return figure;
+    }
+
 }

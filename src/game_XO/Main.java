@@ -1,7 +1,7 @@
 package game_XO;
 
 import game_XO.controller.GameController;
-import game_XO.model.Board;
+import game_XO.model.Field;
 import game_XO.model.Figure;
 import game_XO.model.Player;
 import game_XO.view.*;
@@ -9,13 +9,13 @@ import game_XO.view.*;
 public class Main {
     public static void main(String[] args) {
 
-        final Board board = new Board();
+        final Field field = new Field();
 
         GameController gameController = new GameController("xo", new  Player[]{      new Player("Vova",  Figure.X),
-                                                                                                new Player("Pavel",  Figure.O)} , board);
+                                                                                                new Player("Pavel",  Figure.O)} , field);
         new ConsoleView (gameController).showPlayers();
 
-        board.printBoard();
+        field.printBoard();
 
         gameController.currentPlayer();
 
@@ -27,7 +27,7 @@ public class Main {
 
         gameController.move(1,1, gameController.getPlayers()[0].getFigure());
 
-        board.printBoard();
+        field.printBoard();
 
         gameController.checkWin(gameController.getPlayers()[0].getFigure());
 

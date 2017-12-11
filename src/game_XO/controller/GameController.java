@@ -1,8 +1,9 @@
 package game_XO.controller;
 
-import game_XO.model.Board;
+import game_XO.model.Field;
 import game_XO.model.Player;
 import game_XO.model.Figure;
+import game_XO.model.Point;
 
 public class GameController {
 
@@ -12,12 +13,12 @@ public class GameController {
 
     private final String gameName;
 
-    private final Board board;
+    private final Field field;
 
     private final Player[] players;
 
-    public GameController(final String gameName, Player[] players, Board board){
-        this.board = board;
+    public GameController(final String gameName, Player[] players, Field field){
+        this.field = field;
         this.players = players;
         if (gameName == null || gameName.isEmpty() ) {
             this.gameName = gameName;
@@ -26,8 +27,8 @@ public class GameController {
         }
     }
 
-    public Board getBoard() {
-        return board;
+    public Field getField() {
+        return field;
     }
 
     public Player[] getPlayers(){
@@ -39,7 +40,7 @@ public class GameController {
     }
 
     public Player currentPlayer(){ //выводит знак Х или О чей сейчас ход
-        if (board.checkQantityFigureInBoard(players[0].getFigure()) > board.checkQantityFigureInBoard(players[1].getFigure())){
+        if (field.checkQantityFigureInBoard(players[0].getFigure()) > field.checkQantityFigureInBoard(players[1].getFigure())){
             System.out.println("Ходит " + players[1].getName()+ " фигура = "+ players[1].getFigure().getFigure());
         } else {
             System.out.println("Ходит " + players[0].getName() + " фигура = " + players[0].getFigure().getFigure());
@@ -103,7 +104,7 @@ public class GameController {
     }
 
     public boolean checkEqualsFigire (int x, int y, Figure figure){
-        if (board.getFigure()[x][y] == figure)
+        if (field.getFigure(new Point(x,y)) == figure)
             return true;
         else return false;
     }
@@ -115,7 +116,7 @@ public class GameController {
         if (!checkCord(x) || !checkCord(y)){
             return false;
         }
-        board.setFigure(x , y, figure);
+        field.setFigure(new Point(x,y), figure);
 
         return true;
     }
