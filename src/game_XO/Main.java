@@ -4,10 +4,11 @@ import game_XO.controller.GameController;
 import game_XO.model.Field;
 import game_XO.model.Figure;
 import game_XO.model.Player;
+import game_XO.model.Point;
 import game_XO.view.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         final Field field = new Field();
 
@@ -17,15 +18,15 @@ public class Main {
 
         field.printBoard();
 
+        Point point = new Point(0,2);
+
         gameController.currentPlayer();
 
-        gameController.move(0,2, gameController.getPlayers()[0].getFigure());
+        gameController.move(new Point(0,2), gameController.getPlayers()[0].getFigure());
 
-        gameController.move(1,2, gameController.getPlayers()[0].getFigure());
+        gameController.move(new Point(1,1), gameController.getPlayers()[0].getFigure());
 
-        gameController.move(2,0, gameController.getPlayers()[0].getFigure());
-
-        gameController.move(1,1, gameController.getPlayers()[0].getFigure());
+        gameController.move(new Point(2,0), gameController.getPlayers()[0].getFigure());
 
         field.printBoard();
 

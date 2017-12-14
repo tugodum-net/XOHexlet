@@ -1,9 +1,13 @@
 package game_XO.model;
 
+import game_XO.model.exceptions.InvalidPointException;
+
 public class Field {
     private static final String DEFAULT_STATIC_FIND = " ";
 
     private static final int DEFAULT_FIELD_SIZE = 3;
+
+    private static final int MIN_CORDINATE = 0;
 
     private final int fieldSize;
 
@@ -18,7 +22,7 @@ public class Field {
         figure = new Figure [fieldSize][fieldSize];
     }
 
-    public void printBoard(){                       //выводит доску
+    public void printBoard()throws InvalidPointException{                       //выводит доску
         System.out.println();
         for (int i = 0; i < fieldSize; i++){
             showLine(i);
@@ -42,21 +46,35 @@ public class Field {
         return count;
     }
 
-    public Figure getFigure(final Point point) {
+    public Figure getFigure(final Point point) throws InvalidPointException {
+        if (!checkPoint(point)){
+            throw new InvalidPointException();
+        }
         return this.figure[point.getX()][point.getY()];
     }
 
-    public void setFigure (Point point, Figure figure){
+    public void setFigure (Point point, Figure figure) throws InvalidPointException {
+        if (!checkPoint(point)){
+            throw new InvalidPointException();
+        }
         this.figure[point.getX()][point.getY()] = figure;
     }
 
-    private void showLine(int lineNumber){
+    private boolean checkPoint (Point point){
+        return (checkCordinate(point.getX()) && checkCordinate(point.getY()));
+    }
+
+    private boolean checkCordinate (final int coordinate){
+        return (coordinate <= this.fieldSize && coordinate >= MIN_CORDINATE);
+    }
+
+    private void showLine(int lineNumber)throws InvalidPointException{
         for (int i = 0; i<fieldSize; i++){
             showCell(i,lineNumber);
         }
     }
 
-    private void showCell (int x, int y){
+    private void showCell (int x, int y) throws InvalidPointException{
         if (this.figure[x][y] == null){
             System.out.print("[" + DEFAULT_STATIC_FIND + "]");
         } else {

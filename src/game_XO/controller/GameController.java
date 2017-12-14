@@ -4,6 +4,8 @@ import game_XO.model.Field;
 import game_XO.model.Player;
 import game_XO.model.Figure;
 import game_XO.model.Point;
+import game_XO.model.exceptions.AlreadyOccupaiedException;
+import game_XO.model.exceptions.InvalidPointException;
 
 public class GameController {
 
@@ -48,15 +50,30 @@ public class GameController {
         return null;
     }
 
-    public boolean checkWin(Figure figure){
-        if (checkToWinLines(figure) || checkToWinDiags(figure)){
-            System.out.println("figure -" + figure.getFigure() + " WIN!");
-            return true;
+
+    public void move(Point point, Figure figure) throws AlreadyOccupaiedException, InvalidPointException {
+
+        try{
+            if (field.getFigure(point) != null){
+                throw new AlreadyOccupaiedException ();
+            } else
+                try {
+                    field.setFigure(point, figure);
+                } catch (InvalidPointException e){
+                    e.printStackTrace();
+                }
+        }catch (InvalidPointException e) {
+            e.printStackTrace();
         }
-        return false;
     }
 
-    public boolean checkToWinDiags(Figure figure){
+    public void checkWin(Figure figure) throws InvalidPointException{
+        if (checkToWinLines(figure) || checkToWinDiags(figure)){
+            System.out.println("figure -" + figure.getFigure() + " WIN!");
+        } //else next step();
+    }
+
+    private boolean checkToWinDiags(Figure figure) throws InvalidPointException{
         int count = 0;
         int j = 0;
         for (int i = 0; i<=MAX_CORDINATE; i++){
@@ -82,7 +99,7 @@ public class GameController {
         return false;
     }
 
-    public boolean checkToWinLines(Figure figure) {
+    private boolean checkToWinLines(Figure figure) throws InvalidPointException{
         int countRow = 0;
         int countCol = 0;
         for (int j = 0; j<=MAX_CORDINATE; j++) {
@@ -103,22 +120,10 @@ public class GameController {
         return false;
     }
 
-    public boolean checkEqualsFigire (int x, int y, Figure figure){
+    private boolean checkEqualsFigire (int x, int y, Figure figure) throws InvalidPointException{
         if (field.getFigure(new Point(x,y)) == figure)
             return true;
         else return false;
-    }
-
-    public boolean move(final int x, int y, Figure figure){
-
-        assert x >=0;
-        assert y >=0;
-        if (!checkCord(x) || !checkCord(y)){
-            return false;
-        }
-        field.setFigure(new Point(x,y), figure);
-
-        return true;
     }
 
     private static boolean checkCord (final int coordinate){
