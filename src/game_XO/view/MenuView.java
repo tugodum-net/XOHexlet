@@ -12,7 +12,7 @@ import game_XO.model.exceptions.InvalidPointException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class MenuView {
+public class MenuView  {
 
     private static final int START_CODE = 1;
 

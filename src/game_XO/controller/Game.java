@@ -1,6 +1,7 @@
 package game_XO.controller;
 
 import game_XO.model.Figure;
+import game_XO.model.Player;
 import game_XO.model.Point;
 import game_XO.model.exceptions.AlreadyOccupaiedException;
 import game_XO.model.exceptions.InvalidPointException;
@@ -21,6 +22,9 @@ public class Game {
     }
 
     public void startGame() throws AlreadyOccupaiedException, InvalidPointException {
+        for(Player player : gameController){
+            System.out.format("Player name: %s figure %s\n", player.getName(), player.getFigure());
+        }
         while (gameController.getNextTurn())
             try {
                 Figure currentFigure = gameController.currentPlayer().getFigure();

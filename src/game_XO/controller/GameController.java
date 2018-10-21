@@ -7,10 +7,12 @@ import game_XO.model.Point;
 import game_XO.model.exceptions.AlreadyOccupaiedException;
 import game_XO.model.exceptions.InvalidPointException;
 
+import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.Iterator;
 import java.util.Scanner;
 
-public class GameController {
+public class GameController implements Iterable<Player> {
 
     public static final int MIN_CORDINATE = 0;
 
@@ -169,5 +171,10 @@ public class GameController {
                 System.out.println("Введите корректное значение");
             }
         }
+    }
+
+    @Override
+    public Iterator<Player> iterator() {
+        return Arrays.asList(players).iterator(); //конвертируем массив players в List, вызываем итератор
     }
 }
